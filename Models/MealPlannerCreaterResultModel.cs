@@ -1,7 +1,7 @@
 ﻿namespace MealPlanner.CoreLibrary.Models;
 public class MealPlannerCreaterResultModel : IComparable<MealPlannerCreaterResultModel>
 {
-    public DateTime WhatDate { get; set; }
+    public DateOnly WhatDate { get; set; }
     public string DisplayDate => WhatDate.ToLongDateString();
     public SimpleFoodModel Breakfast { get; set; } = new();
     public SimpleFoodModel Lunch { get; set; } = new();

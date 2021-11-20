@@ -6,3 +6,6 @@ global using aa = CommonBasicLibraries.BasicDataSettingsAndProcesses.Application
 global using bb = CommonBasicLibraries.BasicDataSettingsAndProcesses.BasicDataFunctions;
 global using ff = CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.FileFunctions.FileFunctions;
 global using jj = CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.JsonSerializers.FileHelpers;
+global using CommonBasicLibraries.BasicUIProcesses;
+global using MealPlanner.CoreLibrary.Services;
+global using MealPlanner.CoreLibrary.Storage;
