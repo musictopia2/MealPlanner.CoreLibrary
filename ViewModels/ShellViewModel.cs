@@ -168,7 +168,7 @@ public class ShellViewModel
         {
             result = new();
             result.WhatDate = _currentData!.CurrentDate;
-            result.Breakfast.LastHave = _currentData.CurrentDate;
+            result.Breakfast.LastHave = _currentData.CurrentDate.ToDateTime();
             if (previousItem == null)
             {
                 if (skippedMeal)
@@ -203,7 +203,7 @@ public class ShellViewModel
         }
         if (_currentMeal == EnumMeal.Lunch && wasBreakfast == false)
         {
-            result.Lunch.LastHave = _currentData!.CurrentDate;
+            result.Lunch.LastHave = _currentData!.CurrentDate.ToDateTime();
             if (previousItem == null)
             {
                 if (skippedMeal)
@@ -233,7 +233,7 @@ public class ShellViewModel
         }
         else if (_currentMeal == EnumMeal.Dinner)
         {
-            result.Lunch.LastHave = _currentData!.CurrentDate;
+            result.Lunch.LastHave = _currentData!.CurrentDate.ToDateTime();
             if (previousItem == null)
             {
                 if (skippedMeal)

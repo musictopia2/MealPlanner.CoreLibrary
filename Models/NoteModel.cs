@@ -5,7 +5,7 @@ public class NoteModel : IMappable
     public string Breakfast { get; set; } = "";
     public string Lunch { get; set; } = "";
     public string Dinner { get; set; } = "";
-    public DateOnly WhatDate { get; set; }
+    public DateTime WhatDate { get; set; } //has to use datetime because of issues with sql server providers.
     public string Snacks { get; set; } = "";
     public string Desserts { get; set; } = "";
 }
