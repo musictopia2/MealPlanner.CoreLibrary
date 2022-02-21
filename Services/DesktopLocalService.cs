@@ -2,9 +2,9 @@
 namespace MealPlanner.CoreLibrary.Services;
 public class DesktopLocalService : ICompleteDataService, IFinalResultsService, IMealService
 {
-    private string _completePath = "completelist.json";
-    private string _mealPath = "currentmeal.json";
-    private string _finalPath = "finallist.json";
+    private readonly string _completePath = "completelist.json";
+    private readonly string _mealPath = "currentmeal.json";
+    private readonly string _finalPath = "finallist.json";
     public DesktopLocalService()
     {
         _completePath = $"{aa.GetApplicationPath()}/{_completePath}";
