@@ -1,4 +1,5 @@
-﻿namespace MealPlanner.CoreLibrary.Models;
+﻿
+namespace MealPlanner.CoreLibrary.Models;
 public class SpecialInstructionModel : IMappable
 {
     public int ID { get; set; }

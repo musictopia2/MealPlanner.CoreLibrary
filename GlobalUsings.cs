@@ -10,4 +10,6 @@ global using CommonBasicLibraries.BasicUIProcesses;
 global using MealPlanner.CoreLibrary.Services;
 global using MealPlanner.CoreLibrary.Storage;
 global using CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.BasicExtensions;
+global using CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.MapHelpers;
+
 //global using dd = CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.BasicExtensions.Dates;
