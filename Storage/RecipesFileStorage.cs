@@ -4,13 +4,13 @@ public class RecipesFileStorage : IRecipesStorage
     private readonly string _recipesPath = "Recipes.json";
     public RecipesFileStorage()
     {
-        if (bb.OS == bb.EnumOS.Android)
+        if (bb1.OS == bb1.EnumOS.Android)
         {
-            _recipesPath = Path.Combine(ff.GetApplicationDataForMobileDevices(), _recipesPath);
+            _recipesPath = Path.Combine(ff1.GetApplicationDataForMobileDevices(), _recipesPath);
         }
-        else if (bb.OS == bb.EnumOS.WindowsDT)
+        else if (bb1.OS == bb1.EnumOS.WindowsDT)
         {
-            _recipesPath = Path.Combine(aa.GetApplicationPath(), _recipesPath);
+            _recipesPath = Path.Combine(aa1.GetApplicationPath(), _recipesPath);
         }
         else
         {
@@ -19,14 +19,14 @@ public class RecipesFileStorage : IRecipesStorage
     }
     BasicList<RecipeModel> IRecipesStorage.GetRecipes()
     {
-        if (ff.FileExists(_recipesPath) == false)
+        if (ff1.FileExists(_recipesPath) == false)
         {
             return new();
         }
-        return jj.RetrieveSavedObject<BasicList<RecipeModel>>(_recipesPath);
+        return jj1.RetrieveSavedObject<BasicList<RecipeModel>>(_recipesPath);
     }
     void IRecipesStorage.SaveRecipes(BasicList<RecipeModel> recipes)
     {
-        jj.SaveObject(_recipesPath, recipes);
+        jj1.SaveObject(_recipesPath, recipes);
     }
 }

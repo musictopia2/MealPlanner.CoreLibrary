@@ -1,0 +1,44 @@
+﻿@if (DataContext is null)
+{
+    <div>No view model was found.</div>
+    return;
+}
+@using BasicBlazorLibrary.Components.NavigationMenus
+@using BasicBlazorLibrary.Components.Arrows
+@using MealPlanner.CoreLibrary
+<NavigationBarContainer AlwaysShowBar="true" Title="@DataContext.Title" ShowBack="DataContext.ShowBack " BackClicked="DataContext.GoBack">
+    <BarContent>
+        @if (DataContext.RecipeChosen is null)
+        {
+            <DownloadComponent
+                               Clicked="DataContext.DownloadRecipesAsync"
+                               BackgroundColor="aqua"
+                               TargetHeight="40px"
+                               />
+        }
+    </BarContent>
+    <MainContent>
+        @if (DataContext.Status != "")
+        {
+            @DataContext.Status;
+            return;
+        }
+        @if (DataContext.Recipes.Count == 0)
+        {
+            <div>No recipes</div>
+            return;
+        }
+        @if (DataContext.RecipeChosen is not null)
+        {
+            <MultiLineControl Value="@DataContext.RecipeChosen.Detail" />
+            return;
+        }
+        <MobileListBox
+                       TValue="RecipeModel"
+                       OnItemSelected="DataContext.ChooseRecipe" 
+                       Data="DataContext.Recipes"
+                       Context="Recipe">
+            @Recipe.Name
+        </MobileListBox>
+    </MainContent>
+</NavigationBarContainer> 

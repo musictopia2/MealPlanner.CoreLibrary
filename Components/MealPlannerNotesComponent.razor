@@ -1,0 +1,42 @@
+﻿@if (_notes is null)
+{
+    <div>Loading......</div>
+    return;
+}
+@if (_notes.Count == 0)
+{
+    <div>There are no meal planner notes currently.</div>
+    return;
+}
+<LeftOverLayout>
+    <MainContent>
+        <ScrollableTableDiv Headers="_headers"
+                            ItemList="_notes"
+                            Context="item"
+                            Height="100%">
+            <LabelCell>
+                @item.WhatDate.ToLongDateString()
+            </LabelCell>
+            <FlexibleCell ColumnWidth="@_columnWidth">
+                <TextAreaComponent Rows="3" @bind-Value="@item.Breakfast" />
+            </FlexibleCell>
+            <FlexibleCell ColumnWidth="@_columnWidth">
+                <TextAreaComponent Rows="3" @bind-Value="@item.Lunch" />
+            </FlexibleCell>
+            <FlexibleCell ColumnWidth="@_columnWidth">
+                <TextAreaComponent Rows="3" @bind-Value="@item.Dinner" />
+            </FlexibleCell>
+            <FlexibleCell ColumnWidth="@_columnWidth">
+                <TextAreaComponent Rows="3" @bind-Value="@item.Desserts" />
+            </FlexibleCell>
+            <FlexibleCell ColumnWidth="@_columnWidth">
+                <TextAreaComponent Rows="3" @bind-Value="@item.Snacks" />
+            </FlexibleCell>
+        </ScrollableTableDiv>
+    </MainContent>
+    <BottomContent>
+        <PrimaryButton OnClick="SaveNotesAsync">
+            Save Notes
+        </PrimaryButton>
+    </BottomContent>
+</LeftOverLayout>

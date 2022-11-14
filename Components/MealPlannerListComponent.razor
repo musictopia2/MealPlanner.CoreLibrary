@@ -1,0 +1,24 @@
+﻿@if (ItemList.Count == 0)
+{
+    <div>There are no saved meal items yet.</div>
+    return;
+}
+<ScrollableTableDiv ItemList="ItemList"
+                    Headers="_headers"
+                    Context="item"
+                    Height="100%"
+                    BackgroundColor="Navy"
+                    >
+    <FlexibleCell ColumnWidth="24vw">
+        @item.DisplayDate
+    </FlexibleCell>
+    <FlexibleCell ColumnWidth="24vw">
+        @item.Breakfast.MainCourse
+    </FlexibleCell>
+    <FlexibleCell ColumnWidth="24vw">
+        @item.Lunch.MainCourse
+    </FlexibleCell>
+    <FlexibleCell ColumnWidth="24vw">
+        @item.Dinner.MainCourse
+    </FlexibleCell>
+</ScrollableTableDiv>

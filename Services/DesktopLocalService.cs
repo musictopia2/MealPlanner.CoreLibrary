@@ -1,4 +1,4 @@
-﻿using fs = CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.JsonSerializers.FileHelpers;
+﻿using fs1 = CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.JsonSerializers.FileHelpers;
 namespace MealPlanner.CoreLibrary.Services;
 public class DesktopLocalService : ICompleteDataService, IFinalResultsService, IMealService
 {
@@ -7,52 +7,52 @@ public class DesktopLocalService : ICompleteDataService, IFinalResultsService, I
     private readonly string _finalPath = "finallist.json";
     public DesktopLocalService()
     {
-        _completePath = $"{aa.GetApplicationPath()}/{_completePath}";
-        _mealPath = $"{aa.GetApplicationPath()}/{_mealPath}";
-        _finalPath = $"{aa.GetApplicationPath()}/{_finalPath}";
+        _completePath = $"{aa1.GetApplicationPath()}/{_completePath}";
+        _mealPath = $"{aa1.GetApplicationPath()}/{_mealPath}";
+        _finalPath = $"{aa1.GetApplicationPath()}/{_finalPath}";
     }
     Task ICompleteDataService.DeleteCompleteDataAsync()
     {
-        return ff.DeleteFileAsync(_completePath);
+        return ff1.DeleteFileAsync(_completePath);
     }
     Task IFinalResultsService.DeleteFinalResultsAsync()
     {
-        return ff.DeleteFileAsync(_finalPath);
+        return ff1.DeleteFileAsync(_finalPath);
     }
     Task IMealService.DeleteMealAsync()
     {
-        return ff.DeleteFileAsync(_mealPath);
+        return ff1.DeleteFileAsync(_mealPath);
     }
     Task<CompleteDataModel> ICompleteDataService.GetCompleteDataAsync()
     {
-        return fs.RetrieveSavedObjectAsync<CompleteDataModel>(_completePath);
+        return fs1.RetrieveSavedObjectAsync<CompleteDataModel>(_completePath);
     }
     Task<EnumMeal> IMealService.GetCurrentMealAsync()
     {
-        return fs.RetrieveSavedObjectAsync<EnumMeal>(_mealPath);
+        return fs1.RetrieveSavedObjectAsync<EnumMeal>(_mealPath);
     }
     Task<BasicList<MealPlannerCreaterResultModel>> IFinalResultsService.GetFinalResultsAsync()
     {
-        return fs.RetrieveSavedObjectAsync<BasicList<MealPlannerCreaterResultModel>>(_finalPath);
+        return fs1.RetrieveSavedObjectAsync<BasicList<MealPlannerCreaterResultModel>>(_finalPath);
     }
     Task<bool> IFinalResultsService.HasFinalResultsAsync()
     {
-        return Task.FromResult(ff.FileExists(_finalPath));
+        return Task.FromResult(ff1.FileExists(_finalPath));
     }
     Task<bool> ICompleteDataService.MealsExistAsync()
     {
-        return Task.FromResult(ff.FileExists(_completePath));
+        return Task.FromResult(ff1.FileExists(_completePath));
     }
     Task ICompleteDataService.SaveCompleteDataAsync(CompleteDataModel data)
     {
-        return fs.SaveObjectAsync(_completePath, data);
+        return fs1.SaveObjectAsync(_completePath, data);
     }
     Task IMealService.SaveCurrentMealAsync(EnumMeal meal)
     {
-        return fs.SaveObjectAsync(_mealPath, meal);
+        return fs1.SaveObjectAsync(_mealPath, meal);
     }
     Task IFinalResultsService.SaveFinalResultsAsync(BasicList<MealPlannerCreaterResultModel> results)
     {
-        return fs.SaveObjectAsync(_finalPath, results);
+        return fs1.SaveObjectAsync(_finalPath, results);
     }
 }

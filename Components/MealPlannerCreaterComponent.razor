@@ -1,0 +1,76 @@
+﻿@if (DataContext is null)
+{
+    return;
+}
+<GridContainer Rows="1fr 10fr" Height="100%">
+    <GridItem>
+        <div style="font-size: 5vh">
+            @DataContext.ProgressData
+        </div>
+    </GridItem>
+    <GridItem Row="2">
+        <GridContainer Rows="@SecondGridRows" Columns="@SecondGridColumns" ColumnGap="5px" Height="100%">
+            <GridItem>
+                <CustomLabel FontSize="20px">
+                    @DataContext.GetListText
+                </CustomLabel>
+            </GridItem>
+            <GridItem Row="2">
+                <ComboBoxStringList ItemList="ListForCombo"
+                                    Value="@DataContext.EnteredSoFar"
+                                    ValueChanged="ChangeData"
+                                    @ref="_comboBox"
+                                    Style="_comboModel"
+                                    RequiredFromList="false"
+                                    ComboEnterPressed="ComboPressedAsync" />
+            </GridItem>
+            <GridItem Row="2" Column="2" RowSpan="2">
+                <StackLayout Orientation="EnumOrientation.Vertical" ItemSpacing="5px">
+                    <StackItem>
+                        <CustomButton IsEnabled="DataContext.CanSaveToNetwork"
+                                      OnClick="DataContext.SaveToNetworkAsync">
+                            Save To Network
+                        </CustomButton>
+                    </StackItem>
+                    <StackItem>
+                        <CustomButton OnClick="DataContext.SkipMealAsync">
+                            Skip Meal
+                        </CustomButton>
+                    </StackItem>
+                    <StackItem>
+                        <CustomButton OnClick="DataContext.StartOverAsync">
+                            Start Over
+                        </CustomButton>
+                    </StackItem>
+                    <StackItem>
+                        <CustomButton IsEnabled="DataContext.CanRepeatDay"
+                                      OnClick="DataContext.RepeatDayAsync">
+                            Repeat Day
+                        </CustomButton>
+                    </StackItem>
+                    <StackItem>
+                        <CustomButton IsEnabled="DataContext.CanDeleteMeal"
+                                      OnClick="DataContext.DeleteLastMealAsync">
+                            Delete Meal
+                        </CustomButton>
+                    </StackItem>
+                    <StackItem>
+                        <CustomLabel FontSize="20">
+                            Possible Current Day Too
+                        </CustomLabel>
+                    </StackItem>
+                    <StackItem>
+                        <CheckboxComponent Zoom="3" @bind-Value="DataContext.AlsoCurrentDay" />
+                    </StackItem>
+                </StackLayout>
+            </GridItem>
+            <GridItem Row="3">
+                <LastHaveComponent CurrentDisplayDate="@DataContext.CurrentDisplayDate"
+                                   CurrentFood="@DataContext.CurrentFood" />
+            </GridItem>
+            <GridItem Row="4">
+                <MealPlannerListComponent ItemList="@DataContext.FinalList" />
+            </GridItem>
+        </GridContainer>
+    </GridItem>
+</GridContainer>
