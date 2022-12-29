@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BasicBlazorLibrary" Version="7.0.2" />
-    <PackageReference Include="CommonBasicLibraries" Version="7.0.8" />
+    <PackageReference Include="BasicBlazorLibrary" Version="7.0.14" />
+    <PackageReference Include="CommonBasicLibraries" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.0" />
   </ItemGroup>
 
