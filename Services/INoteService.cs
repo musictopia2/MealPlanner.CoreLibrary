@@ -3,4 +3,5 @@ public interface INoteService
 {
     Task<BasicList<NoteModel>> GetNotesAsync();
     Task SaveNotesAsync(BasicList<NoteModel> notes);
+    Task<BasicList<string>> GetUpcomingMealItemsAsync();
 }

@@ -1,33 +1,14 @@
-﻿using CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.BasicExtensions;
-namespace MealPlanner.CoreLibrary.ViewModels;
-
-//for .net 6 in november 2021, needs to rethink this because we have recipes as well now.
-//not sure what else i can do.  but later can rethink.
-public class ShellViewModel
+﻿namespace MealPlanner.CoreLibrary.ViewModels;
+public class ShellViewModel(ICompleteDataService completeDataService,
+    IFinalResultsService finalResultsService,
+    IMealService mealService,
+    IMealPlannerCreaterService createrService,
+    IMessageBox message,
+    IExit exit
+        )
 {
-    private readonly ICompleteDataService _completeDataService;
-    private readonly IFinalResultsService _finalResultsService;
-    private readonly IMealService _mealService;
-    private readonly IMealPlannerCreaterService _createrService;
-    private readonly IMessageBox _message;
-    private readonly IExit _exit;
     private EnumMeal _currentMeal;
     private CompleteDataModel? _currentData;
-    public ShellViewModel(ICompleteDataService completeDataService,
-        IFinalResultsService finalResultsService,
-        IMealService mealService,
-        IMealPlannerCreaterService createrService,
-        IMessageBox message,
-        IExit exit
-        )
-    {
-        _completeDataService = completeDataService;
-        _finalResultsService = finalResultsService;
-        _mealService = mealService;
-        _createrService = createrService;
-        _message = message;
-        _exit = exit;
-    }
     public BasicList<MealPlannerCreaterResultModel> FinalList { get; private set; } = new();
     public string ProgressData { get; set; } = "";
     public bool CanDeleteMeal { get; private set; }
@@ -44,18 +25,18 @@ public class ShellViewModel
     {
         ProgressData = "Saving Meals";
         StateHasChanged?.Invoke();
-        await _createrService.SaveMealsAsync(FinalList);
+        await createrService.SaveMealsAsync(FinalList);
         ProgressData = "Deleting Temporary Files";
         StateHasChanged?.Invoke();
         await DeleteFilesAsync();
-        await _message.ShowMessageAsync("Meals Saved");
-        _exit.ExitApp();
+        await message.ShowMessageAsync("Meals Saved");
+        exit.ExitApp();
     }
     private async Task DeleteFilesAsync()
     {
-        await _completeDataService.DeleteCompleteDataAsync();
-        await _finalResultsService.DeleteFinalResultsAsync();
-        await _mealService.DeleteMealAsync();
+        await completeDataService.DeleteCompleteDataAsync();
+        await finalResultsService.DeleteFinalResultsAsync();
+        await mealService.DeleteMealAsync();
         CanSaveToNetwork = false;
         CanDeleteMeal = false;
         _currentData = new();
@@ -156,8 +137,8 @@ public class ShellViewModel
     }
     private async Task SaveSectionAsync()
     {
-        await _mealService.SaveCurrentMealAsync(_currentMeal);
-        await _finalResultsService.SaveFinalResultsAsync(FinalList);
+        await mealService.SaveCurrentMealAsync(_currentMeal);
+        await finalResultsService.SaveFinalResultsAsync(FinalList);
     }
     private async Task SaveMealAsync(bool skippedMeal, SimpleFoodModel? payLoad, string foodName, MealPlannerCreaterResultModel? previousItem = null, bool hasMore = false)
     {
@@ -257,7 +238,7 @@ public class ShellViewModel
             }
             _currentData.CurrentDate = _currentData.CurrentDate.AddDays(1);
             await PrivateGetNextMealsAsync(_currentData.CurrentDate);
-            await _finalResultsService.SaveFinalResultsAsync(FinalList);
+            await finalResultsService.SaveFinalResultsAsync(FinalList);
         }
         EnteredSoFar = "";
         if (hasMore == false)
@@ -333,16 +314,16 @@ public class ShellViewModel
             ProgressData = "Getting Date";
             StateHasChanged?.Invoke();
             await Task.Delay(200);
-            currentDate = await _createrService.GetNextDateAsync(AlsoCurrentDay);
+            currentDate = await createrService.GetNextDateAsync(AlsoCurrentDay);
         }
         _currentData = new();
-        _currentData.CompleteList = await _createrService.GetPossibleMealsForDayAsync(currentDate);
+        _currentData.CompleteList = await createrService.GetPossibleMealsForDayAsync(currentDate);
         _currentData.CurrentDate = currentDate;
         _currentMeal = EnumMeal.Breakfast;
-        await _mealService.SaveCurrentMealAsync(_currentMeal);
+        await mealService.SaveCurrentMealAsync(_currentMeal);
         ProgressData = "Saving Meals For The Day";
         StateHasChanged?.Invoke();
-        await _completeDataService.SaveCompleteDataAsync(_currentData);
+        await completeDataService.SaveCompleteDataAsync(_currentData);
         ProgressData = "";
     }
     private bool _needsInit = true;
@@ -352,25 +333,25 @@ public class ShellViewModel
         {
             return;
         }
-        if (await _completeDataService.MealsExistAsync() == false)
+        if (await completeDataService.MealsExistAsync() == false)
         {
             CanDeleteMeal = false;
             await PrivateGetNextMealsAsync();
         }
         else
         {
-            _currentData = await _completeDataService.GetCompleteDataAsync();
-            _currentMeal = await _mealService.GetCurrentMealAsync();
+            _currentData = await completeDataService.GetCompleteDataAsync();
+            _currentMeal = await mealService.GetCurrentMealAsync();
         }
-        if (await _finalResultsService.HasFinalResultsAsync() == false)
+        if (await finalResultsService.HasFinalResultsAsync() == false)
         {
             FinalList.Clear();
             CanDeleteMeal = false;
-            await _finalResultsService.SaveFinalResultsAsync(FinalList);
+            await finalResultsService.SaveFinalResultsAsync(FinalList);
         }
         else
         {
-            FinalList = await _finalResultsService.GetFinalResultsAsync();
+            FinalList = await finalResultsService.GetFinalResultsAsync();
             if (_currentMeal == EnumMeal.Breakfast && FinalList.Count > 0)
             {
                 CanSaveToNetwork = true;
