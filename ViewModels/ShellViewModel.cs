@@ -16,7 +16,7 @@ public class ShellViewModel(ICompleteDataService completeDataService,
     public string EnteredSoFar { get; set; } = "";
     public string CurrentDisplayDate { get; set; } = "";
     public string CurrentFood { get; private set; } = "";
-    public string GetListText => _currentData is null ? "Meal List" : $"Meal List For {_currentData.CurrentDate.GetLongDate()} For {_currentMeal}";
+    public string GetListText => _currentData is null ? "Meal List" : $"Meal List For {_currentData.CurrentDate.GetLongDate} For {_currentMeal}";
     public BasicList<SimpleFoodModel> CurrentList { get; private set; } = new();
     public bool CanSaveToNetwork { get; private set; }
     public Action? StateHasChanged { get; set; }
